@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Frame pacing (60 FPS)
+
+- 60 FPS is now properly smooth. Before, frame times wobbled by 2-3 ms every frame and there was a ~33 ms stutter every 15-20 seconds. Now nearly every frame lands within 0.5 ms of 16.7 ms.
+- The `vsync` setting was never actually applied. It belongs to the GPU plugin, which loads after the setting was made. It's now set through `REX_VSYNC` so it takes effect.
+- One frame limiter instead of two that fought each other. It runs just before each frame is handed to the GPU and uses a high resolution timer.
+- The game no longer repaints in the background at the monitor's refresh rate, which made 60 FPS uneven on high refresh screens and with G-Sync/FreeSync.
+- Tearing is allowed by default again. With it off, presenting could stall the emulated GPU and drop the game below 60.
+- The 120/144/240 options are still paced at 60 for now (they never really ran above 60 before either). The game runs too fast above 60 without timer changes.
+
+### Other
+
+- F10 now shows FPS, frame times and a frame time graph in a small separate window, so it doesn't affect pacing.
+- `--frame_log=true` writes per-frame timings to `frametimes.csv`.
+
 ## v1.0.5 — 2026-10-19
 
 - Added a transparent Windows desktop icon at 16, 24, 32, 48, 64, 128 and 256 pixels.

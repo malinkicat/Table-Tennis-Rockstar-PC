@@ -13,6 +13,8 @@ FIXED_FILES = {
     'project/cmake/rexglue.cmake', 'project/launcher/Launcher.cs',
     'project/src/main.cpp', 'project/src/tabletennis_app.h', 'project/src/offline_menu_device.h',
     'project/src/intro_skip.cpp', 'project/src/intro_skip.h',
+    'project/src/frame_pacer.cpp', 'project/src/frame_pacer.h',
+    'project/src/stats_window.cpp', 'project/src/stats_window.h',
     'project/sdk-overrides/rex/platform/fpscr.h', 'project/sdk-overrides/rex/ppc/context.h',
     'project/sdk-overrides/rex_app.cpp',
     'project/tools/disc_image.py', 'project/tools/patch_menu.py', 'project/tools/patch_native.py',

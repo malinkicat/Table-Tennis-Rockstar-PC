@@ -54,7 +54,7 @@ Pick the resolution and framerate combination that suits your GPU and monitor. A
 ### A more convenient PC experience
 
 - **Graphical settings launcher:** choose your ISO, resolution, framerate, display mode and image filters in one place; settings are saved for the next launch.
-- **Live FPS and frame-time overlay:** toggle it with **F10** while playing.
+- **Live FPS and frame-time overlay with a frame time graph:** toggle it with **F10** while playing.
 - **Quick exit:** press **Escape** to return to Windows.
 - **SDL3 gamepad support**, with controller detection active before the startup intro.
 

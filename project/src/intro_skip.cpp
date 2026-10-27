@@ -120,6 +120,14 @@ bool SkipMovies() {
 
 bool ShowTransition() { return phase.load() == Phase::Skipping; }
 
+bool UiWorkFinished() {
+  const auto current = phase.load();
+  if (current == Phase::Done || current == Phase::Drain) return startup_gamepads.empty();
+  // At the startup save prompt input is already handled by FilterInput, and
+  // the loading transition is no longer shown.
+  return current == Phase::Prompt && frontend_started.load();
+}
+
 void AdvanceIntroMovie(PPCContext& ctx, uint8_t* base) {
   // These call sites request single-frame stepping, regardless of dt.
   // Run the normal frames to their Stop action, preserving the real completion

@@ -2,46 +2,20 @@
 
 #include "generated/default/tabletennis_init.h"
 #include <rex/cvar.h>
-#include <chrono>
-#include <thread>
-#if defined(_M_X64) || defined(__x86_64__)
-#include <immintrin.h>
-#endif
-
 #include "tabletennis_app.h"
 
 REXCVAR_DEFINE_BOOL(show_fps, false, "UI", "Show in-game FPS counter");
 REXCVAR_DEFINE_INT32(framerate, 60, "Video", "Target framerate limit (60, 120, 144, 240, 0=unlimited)");
+REXCVAR_DEFINE_BOOL(frame_log, false, "Video", "Write every game frame and present time to frametimes.csv next to the executable");
+REXCVAR_DEFINE_BOOL(allow_tearing, true, "Video", "Present without waiting for display refresh. Off can drop the game below 60 FPS: a blocked present stalls GPU emulation");
 
 #undef __imp__VdSwap
 extern "C" REX_FUNC(__imp__VdSwap);
 
 extern "C" void Tabletennis_VdSwap_Hook(PPCContext& ctx, uint8_t* base) {
-  // Call original VdSwap to commit guest frame to GPU
+  // Frame pacing happens at the start of the D3D Swap that calls this
+  // (tabletennis::pacing::BeforeSwap).
   __imp__VdSwap(ctx, base);
-
-  // High-precision frame limiter for high refresh rate modes
-  int32_t target_fps = REXCVAR_GET(framerate);
-  if (target_fps > 0) {
-    using clock = std::chrono::steady_clock;
-    static auto last_swap = clock::now();
-    const auto target_duration = std::chrono::nanoseconds(1'000'000'000LL / target_fps);
-
-    auto now = clock::now();
-    auto elapsed = now - last_swap;
-    if (elapsed < target_duration) {
-      auto sleep_dur = target_duration - elapsed;
-      if (sleep_dur > std::chrono::milliseconds(2)) {
-        std::this_thread::sleep_for(sleep_dur - std::chrono::milliseconds(1));
-      }
-      while (clock::now() - last_swap < target_duration) {
-#if defined(_M_X64) || defined(__x86_64__)
-        _mm_pause();
-#endif
-      }
-    }
-    last_swap = clock::now();
-  }
 }
 
 extern "C" void __imp__Tabletennis_VdSwap_Hook(PPCContext& ctx, uint8_t* base) {
