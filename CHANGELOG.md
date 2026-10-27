@@ -9,7 +9,13 @@
 - One frame limiter instead of two that fought each other. It runs just before each frame is handed to the GPU and uses a high resolution timer.
 - The game no longer repaints in the background at the monitor's refresh rate, which made 60 FPS uneven on high refresh screens and with G-Sync/FreeSync.
 - Tearing is allowed by default again. With it off, presenting could stall the emulated GPU and drop the game below 60.
-- The 120/144/240 options are still paced at 60 for now (they never really ran above 60 before either). The game runs too fast above 60 without timer changes.
+
+### High refresh (experimental)
+
+- The 120/144/240 options now really run above 60. The game normally adds 1/60 s of game time per frame, so above 60 the timer step now follows the real frame time to keep the game at normal speed.
+- New launcher option to use the high frame rate in matches only. Menus, loading, videos and the pause menu stay at 60 so they behave normally.
+- The pause menu and help tips work normally at high frame rates.
+- If the driver caps the frame rate or forces V-Sync, the game follows it instead of fighting it.
 
 ### Other
 

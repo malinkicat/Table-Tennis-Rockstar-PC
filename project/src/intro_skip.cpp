@@ -1,5 +1,6 @@
 #include "generated/default/tabletennis_init.h"
 #include "intro_skip.h"
+#include "frame_pacer.h"
 
 #include <SDL3/SDL.h>
 #include <array>
@@ -199,6 +200,7 @@ bool AdvanceFrontendMovie(PPCContext& ctx, uint8_t* base) {
 void FilterInput(PPCContext& ctx, uint8_t* base, uint32_t user, uint32_t state) {
   if (user >= 4 || !state || ctx.r3.u32 != 0) return;
   const uint16_t buttons = REX_LOAD_U16(state + 4);
+  tabletennis::pacing::OnControllerButtons(user, buttons, base);
   const bool pressed = buttons || REX_LOAD_U8(state + 6) > 30 ||
                        REX_LOAD_U8(state + 7) > 30;
   if (phase.load() == Phase::Watching && pressed) {
