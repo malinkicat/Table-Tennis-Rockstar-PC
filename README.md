@@ -1,5 +1,16 @@
 # Rockstar Games presents Table Tennis — Windows PC Recompilation
 
+> **About this fork**
+>
+> This fork adds frame pacing fixes and experimental high refresh support that aren't in the original yet (submitted upstream as [#6](https://github.com/davidptrssvea/Table-Tennis-Rockstar-PC/pull/6) and [#7](https://github.com/davidptrssvea/Table-Tennis-Rockstar-PC/pull/7)):
+>
+> - Smooth 60 FPS: steady frame times, no stutter every few seconds.
+> - 120/144/240 FPS that really run above 60 at normal game speed (experimental). There's an option to use the high frame rate in matches only, keeping menus, loading, videos and pause at 60.
+> - Works with a driver frame cap or forced V-Sync, e.g. a 141 FPS cap on a 144 Hz screen.
+> - F10 shows FPS and a frame time graph.
+>
+> The installer below builds the original version. To get these changes, build from this fork's source (see **Developer / advanced installation**).
+
 Bring the Xbox 360 classic to your PC with **up to 4K output, higher internal 3D resolution, high-refresh framerate options, and optional image filters**. The game code is recompiled to native Windows x64 with ReXGlue SDK v0.10.0 and DirectX 12 rendering.
 
 Build and play from **your own Xbox 360 disc image**. A graphical installer prepares the required components and creates the local game build for you.
